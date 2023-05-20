@@ -8,11 +8,18 @@ use App\Models\User;
 
 
 
+
 class Ad extends Model
 {
     protected $fillable = ['title','body','price'];
 
     use HasFactory;
+
+    public function user()
+
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function category()
 
@@ -20,11 +27,21 @@ class Ad extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function user()
 
+
+    static public function ToBeRevisionedCount()
     {
-        return $this->belongsTo(User::class);
+        return Ad::where('is_accepted', null)->count();
     }
+
+
+
+    public function setAccepted($value)
+{
+    $this->is_accepted = $value;
+    $this->save();
+    return true;
+}
 
 
 

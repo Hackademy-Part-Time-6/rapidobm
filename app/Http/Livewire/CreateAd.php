@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 use App\Models\Ad;
+use App\Models\Category;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class CreateAd extends Component
 {
@@ -12,10 +14,10 @@ public $price;
 public $category;
 
 Protected $rules = [
-    'title'=>'required|<min:4',
-    'body'=>'required|<min:8',
+    'title'=>'required|min:4',
+    'body'=>'required|min:8',
     'category'=>'required',
-    'price'=>'required|<min:4',
+    'price'=>'required',
 
 ];
 protected $messages = [
@@ -27,8 +29,9 @@ protected $messages = [
 
 public function store()
 {
-    $category = Category::find($this->category);
-$ad = $category->ads()->create
+
+        $category = Category::find($this->category);
+    $ad = $category->ads()->create
 ([
         'title'=>$this->title,
         'body'=>$this->body,
@@ -37,15 +40,13 @@ $ad = $category->ads()->create
 
 Auth::user()->ads()->save($ad);
 
-    session()->flash('message','Anuncio creado con éxito');
+    session()->flash('message','Ad anuncio creado con éxito');
 
     $this->cleanForm();
 
 }
 
-public function updated ($propertyName)
-
-{
+public function updated($propertyName) {
     $this->validateOnly($propertyName);
 }
 
@@ -56,6 +57,7 @@ public function cleanForm()
     $this->body ="";
     $this->category="";
     $this->price ="";
+    
 }
 
 

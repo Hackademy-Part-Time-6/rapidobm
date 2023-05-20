@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\RevisorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name ('home');
 
-Route::get('/category/{category:name}/ads',[PublicController::class, 'adsByCategory'])->name('category.ads');
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -32,10 +32,21 @@ Route::get('/register', function () {
 
 Route::get('/', [PublicController::class,'index'])->name('home');
 
+Route::get('/category/{category:name}/ads',[PublicController::class, 'adsByCategory'])->name('category.ads');
+
 Route::get('/ads/create', [AdController::class,'create'])->name('ads.create');
 
 Route::get('/ads/{ad}', [AdController::class,'show'])->name('ads.show');
 
 
+Route::middleware(['isRevisor'])->group(function () {
+Route::get('/revisor',[RevisorController::class,'index'] )->name('revisor.home');
+Route::patch('/revisor/ad/{ad}/accept',[RevisorController::class,'acceptAd'])->name('revisor.ad.accept');
+Route::patch('/revisor/ad/{ad}/reject',[RevisorController::class,'rejectAd'])->name('revisor.ad.reject');
+});
 
+Route::get('revisor/become',[RevisorController::class,'becomeRevisor'])->middleware('auth')->name('revisor.become');
 
+Route::get('revisor/{user}/make',[RevisorController::class,'makeRevisor'])->middleware('auth')->name('revisor.make');
+
+Route::post('/locale/{locale}', [PublicController::class,'setLocale'])->name('locale.set');

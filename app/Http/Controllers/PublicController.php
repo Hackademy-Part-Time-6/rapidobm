@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ad;
+use App\Models\Category;
+use Illuminate\Routing\Controller;
+
 
 class PublicController extends Controller
 {
@@ -19,8 +22,13 @@ class PublicController extends Controller
        return view ('ad.by-category', compact('category','ads'));
     }
 
-  
 
+
+    public function setLocale($locale)
+    {
+        session()->put('locale', $locale);
+        return redirect()->back();
+    }
 
 }
 
