@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Models\Ad;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 

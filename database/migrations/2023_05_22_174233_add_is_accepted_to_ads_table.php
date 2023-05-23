@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('ads', function (Blueprint $table) {
-$table->unsignedBigInteger('category_id')->dafault(1);
-$table->foreign('category_id')->references('id')->on('categories');
 
-            //
+            $table->boolean('is_accepted')->nullable();
+
+
         });
     }
 
@@ -25,10 +25,9 @@ $table->foreign('category_id')->references('id')->on('categories');
     public function down(): void
     {
         Schema::table('ads', function (Blueprint $table) {
-$table->dropForeign(['category_id']);
-$table->dropColumn('category_id');
 
-            //
+            $table->boolean('is_accepted')->nullable();
+
         });
     }
 };

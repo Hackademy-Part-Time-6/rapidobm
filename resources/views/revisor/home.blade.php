@@ -1,19 +1,18 @@
 
 <x-layout>
     <x-slot name='title'>Rapido - Revisor Home</x-slot>
-    @if ($ad)
-    @if (session()->has('message')) <x-alert :type="session('message')['type']" :message="session('message')['text']" /> @endif
+    @if($ad)
     <div class='container my-5 py-5'>
         <div class='row'>
             <div class='col-12 col-md-8 offset-md-2'>
                 <div class="card">
                     <div class="card-header">
-                        Anuncio #{{$ad->id}}
+                        {{__('Anuncio')}} #{{$ad->id}}
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <b>Usuario</b>
+                                <b>{{__('Usuario')}}</b>
                             </div>
                             <div class="col-md-9">
                                 #{{$ad->user->id}} - {{$ad->user->name}} - {{$ad->user->email}}
@@ -22,7 +21,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <b>Título</b>
+                                <b>{{__('Título')}}</b>
                             </div>
                             <div class="col-md-9">
                                 {{$ad->title}}
@@ -31,7 +30,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <b>Precio</b>
+                                <b>{{__('Precio')}}</b>
                             </div>
                             <div class="col-md-9">
                                 {{$ad->price}}
@@ -40,7 +39,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <b>Descripción</b>
+                                <b>{{__('Descripción:')}}</b>
                             </div>
                             <div class="col-md-9">
                                 {{$ad->body}}
@@ -49,7 +48,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <b>Categoría</b>
+                                <b>{{__('Categoría')}}</b>
                             </div>
                             <div class="col-md-9">
                                 {{$ad->category->name}}
@@ -58,7 +57,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <b>Fecha de creación</b>
+                                <b>{{__('Publicado el:')}}</b>
                             </div>
                             <div class="col-md-9">
                                 {{$ad->created_at}}
@@ -71,23 +70,21 @@
                         <form action="{{route('revisor.ad.reject',$ad)}}" method="POST">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="btn btn-danger">Rechazar</button>
+                            <button type="submit" class="btn btn-danger">{{__('Rechazar')}}</button>
                         </form>
                     </div>
                     <div class="col-6 text-end">
                         <form action="{{route('revisor.ad.accept',$ad)}}" method="POST">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="btn btn-success">Aceptar</button>
+                            <button type="submit" class="btn btn-success">{{__('Aceptar')}}</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-@else
-<h3 class="text-center"> No hay anuncios para revisar, vuelve más tarde, gracias </h3>
-
-@endif
+    @else
+    <h3 class="text-center">{{__('No hay anuncios para revisar, vuelve más tarde, gracias')}}</h3>
+    @endif
 </x-layout>
